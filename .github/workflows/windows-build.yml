@@ -33,23 +33,23 @@ jobs:
           name: main-exe
           path: dist/main.exe
 
-    # 2. Job to create the GitHub Release
-    create_release:
-      name: Create GitHub Release
-      needs: build # Ensures this only runs after the EXE is successfully built
-      runs-on: ubuntu-latest # Can use a cheaper Linux runner for the upload/release
+  # 2. Job to create the GitHub Release
+  create_release:
+    name: Create GitHub Release
+    needs: build # Ensures this only runs after the EXE is successfully built
+    runs-on: ubuntu-latest # Can use a cheaper Linux runner for the upload/release
 
-      steps:
-        - name: ⬇️ Download Windows EXE Artifact
-          uses: actions/download-artifact@v4
-          with:
-            name: main-exe
-            path: ./release_assets/ # Downloads the .exe into this temporary folder
+    steps:
+      - name: ⬇️ Download Windows EXE Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: main-exe
+          path: ./release_assets/ # Downloads the .exe into this temporary folder
 
-        - name: 🏷️ Create and Upload Release
-          uses: softprops/action-gh-release@v2
-          if: startsWith(github.ref, 'refs/tags/') # Only runs if triggered by a tag push
-          with:
-            files: ./release_assets/main.exe # Path to the downloaded EXE
-            prerelease: false
-            # The tag name is automatically used for the release
+      - name: 🏷️ Create and Upload Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') # Only runs if triggered by a tag push
+        with:
+          files: ./release_assets/main.exe # Path to the downloaded EXE
+          prerelease: false
+          # The tag name is automatically used for the release
