@@ -144,18 +144,16 @@ def check_barcode_skippedwells(filepath, xml_files, barcode, s_or_d):
             transfer = xmldoc.getElementsByTagName('transfer')
 
             num_skippedwells = int(skippedwells[0].attributes['total'].value)
-            # plate_barcode = platebarcode[s_or_d].attributes['barcode'].value
+            plate_barcode = platebarcode[s_or_d].attributes['barcode'].value
             date = transfer[0].attributes['date'].value
 
             obj_file_date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
             dif_time = today - obj_file_date
 
-            for i in range(0, 2):
-                plate_barcode = platebarcode[i].attributes['barcode'].value
-                if num_skippedwells > 0 and barcode == plate_barcode and dif_time.days < 10000000000:
-                    files_skippedwells.append([xml, num_skippedwells, date])
-                elif num_skippedwells == 0 and barcode == plate_barcode and dif_time.days < 10000000000:
-                    print_result.append([str(xml) + ' with ' + str(barcode) + ' has 0 skippedwells.'])
+            if num_skippedwells > 0 and barcode == plate_barcode and dif_time.days < 1:
+                files_skippedwells.append([xml, num_skippedwells, date])
+            elif num_skippedwells == 0 and barcode == plate_barcode and dif_time.days < 1:
+                print_result.append([str(xml) + ' with ' + str(barcode) + ' has 0 skippedwells.'])
         except:
             empty_files.append(xml)
     return files_skippedwells, print_result
