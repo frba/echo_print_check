@@ -189,6 +189,10 @@ def main(argv):
                 files_output = print_skippedwells_list(filepath, group_files_list)
                 filenames = print_csv_files(filepath, files_output)
                 print('Created files: ' + str(filenames))
+                if len(filenames) > 0:
+                    sys.exit(1) # Return 1 if files created with skipped wells > 0
+                else:
+                    sys.exit(0) # Return 0 if no files created with skipped wells > 0 but some files with 0 skipped wells
 
             else:
                 if len(print_result) > 0:
