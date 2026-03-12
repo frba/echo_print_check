@@ -29,7 +29,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: 🔨 Package Application with PyInstaller
-        run: pyinstaller --onefile --name echo_print_check main.py
+        run: pyinstaller --onefile --name echo_print_check --icon echo.ico main.py
 
       - name: ⬆️ Upload Executable as Artifact
         uses: actions/upload-artifact@v4
